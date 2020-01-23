@@ -1,0 +1,86 @@
+.toast-container {
+    position: fixed;
+    min-height: 200px;
+    top: 85px;
+    right: 30px;
+}
+
+.toast {
+
+    min-width: 500px;
+
+    .progress {
+        height: 5px;
+        border-radius: 0;
+    }
+
+    .progress-bar {
+        transition: width 0.5s ease;
+    }
+
+    &.toast-success {
+
+        .toast-close {
+            color: darken($success, 30%);
+        }
+
+        .toast-header {
+            background-color: $success;
+            color: darken($success, 30%);
+            border-bottom: 1px solid darken($success, 10%);
+        }
+
+        .toast-body {
+            background-color: lighten($success, 30%);
+            color: darken($success, 30%);
+        }
+
+        .progress-bar {
+            background-color: $success
+        }
+    }
+
+    &.toast-warning {
+
+        .toast-close {
+            color: darken($warning, 30%);
+        }
+
+        .toast-header {
+            background-color: $warning;
+            color: darken($warning, 30%);
+            border-bottom: 1px solid darken($warning, 10%);
+        }
+
+        .toast-body {
+            background-color: lighten($warning, 30%);
+            color: darken($warning, 30%);
+        }
+
+        .progress-bar {
+            background-color: $warning
+        }
+    }
+
+    &.toast-info {
+
+        .toast-close {
+            color: darken($info, 40%);
+        }
+
+        .toast-header {
+            background-color: $info;
+            color: darken($info, 40%);
+            border-bottom: 1px solid darken($info, 5%);
+        }
+
+        .toast-body {
+            background-color: lighten($info, 10%);
+            color: darken($info, 40%);
+        }
+
+        .progress-bar {
+            background-color: $info
+        }
+    }
+}
