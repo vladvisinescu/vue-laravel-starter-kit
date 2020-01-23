@@ -14,4 +14,8 @@
 #### Left to do _so far_
 
 - API client wrapper?
+- forgot password
+- reset password
+- email verification
+- component lazy loading chunks
 - ~~password complexity indicator~~ done using Dropbox's `https://github.com/dropbox/zxcvbn` library

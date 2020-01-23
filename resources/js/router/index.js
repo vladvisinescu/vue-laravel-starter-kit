@@ -12,6 +12,7 @@ import UsersIndex from '../views/UsersIndex.vue'
 
 import Login from '../components/Auth/Login'
 import Register from '../components/Auth/Register';
+import ForgotPassword from "../components/Auth/ForgotPassword";
 
 const routes = [
     {
@@ -33,6 +34,11 @@ const routes = [
         path: '/register',
         name: 'register',
         component: Register
+    },
+    {
+        path: '/forgot_password',
+        name: 'forgot_password',
+        component: ForgotPassword
     },
     {
         path: '/users',

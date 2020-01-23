@@ -5,7 +5,7 @@
             <div class="col-sm-4">
                 <div class="card">
                     <h4 class="card-header">
-                        {{ __('ui.auth.login') }}
+                        {{ __('ui.auth.forgot_password') }}
                     </h4>
                     <div class="card-body">
                         <div class="app-login-form">
@@ -16,7 +16,7 @@
                                     <span class="help-block" v-if="errors.email">{{ errors.email[0] }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="d-flex justify-content-between"><span>{{ __('ui.auth.form.password') }}</span> <strong><router-link to="/forgot_password" href="javascript:;">{{ __('ui.auth.forgot_question') }}</router-link></strong></label>
+                                    <label for="password" class="d-flex justify-content-between"><span>{{ __('ui.auth.form.password') }}</span> <strong><a href="javascript:;">{{ __('ui.auth.forgot_question') }}</a></strong></label>
                                     <input type="password" class="form-control" id="password" v-bind:class="{ 'is-invalid': errors.password }" v-model="form.password">
                                     <span class="help-block" v-if="errors.password">{{ errors.password[0] }}</span>
                                 </div>
@@ -36,52 +36,11 @@
 </template>
 
 <script>
-
-    import { mapGetters } from 'vuex'
-
     export default {
-
-        computed: {
-            ...mapGetters({
-                errors: 'auth/getLoginErrors'
-            })
-        },
 
         data() {
             return {
-                form: {
-                    email: '',
-                    password: ''
-                }
-            }
-        },
-
-        beforeRouteLeave (to, from, next) {
-            this.$store.commit('auth/clearLoginErrors')
-            next()
-        },
-
-        methods: {
-            tryLogin() {
-                const form = this.form
-                this.$store.dispatch('auth/tryLogin', { form: form })
-                    .then(response => {
-                        this.$router.push(this.$route.query.redirect || {name: 'home'})
-                        this.$toast().success({
-                            title: this.__('ui.auth.login'),
-                            body: this.__('auth.login.toast.success'),
-                            icon: 'fa-sign-out'
-                        })
-                    }).catch(error => {
-                        this.$toast().warning({
-                            title: this.__('ui.auth.unauthorized'),
-                            body: this.__('auth.invalid_credentials'),
-                            icon: 'fa-sign-out'
-                        })
-
-                        this.form.email = ''
-                        this.form.password = ''
-                    })
+                //
             }
         }
     }

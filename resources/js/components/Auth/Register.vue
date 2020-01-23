@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
                 <div class="card">
                     <h4 class="card-header">
                         {{ __('ui.auth.register') }}
