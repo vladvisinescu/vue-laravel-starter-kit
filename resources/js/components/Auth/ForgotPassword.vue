@@ -9,7 +9,7 @@
                     </h4>
                     <div class="card-body">
                         <div class="app-login-form">
-                            <form action="" @submit.prevent="tryLogin">
+                            <form action="" @submit.prevent="">
                                 <div class="form-group">
                                     <label for="email">{{ __('ui.auth.form.username') }}</label>
                                     <input type="text" class="form-control" id="email" v-bind:class="{ 'is-invalid': errors.email }" v-model="form.email">

@@ -20145,7 +20145,6 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.tryLogin($event)
                     }
                   }
                 },
