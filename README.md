@@ -15,8 +15,12 @@
 #### Left to do _so far_
 
 - API client wrapper?
-- forgot password
-- reset password
+- reset password messages / toasts
 - email verification
 - component lazy loading chunks
 - ~~password complexity indicator~~ done using Dropbox's `https://github.com/dropbox/zxcvbn` library
+
+
+sudo apt install -y --allow-change-held-packages php7.4-cli php7.4-bcmath php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-intl
+ php7.4-json php7.4-ldap php7.4-mbstring php7.4-mysql php7.4-odbc php7.4-phpdbg php7.4-pspell php7.4-soap php7.4-sqlite3 
+ php7.4-xml php7.4-zip php7.4-readline

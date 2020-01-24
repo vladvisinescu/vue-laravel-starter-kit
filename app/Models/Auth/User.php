@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'reset_token', 'reset_token_created_at'
     ];
 
     /**
@@ -38,5 +38,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'reset_token_created_at' => 'datetime'
+    ];
+
+    public $timestamps = [
+        'created_at', 'updated_at', 'reset_token_created_at'
     ];
 }

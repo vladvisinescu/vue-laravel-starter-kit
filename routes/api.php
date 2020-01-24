@@ -26,6 +26,7 @@ Route::group([], function () {
     Route::group(['/prefix' => 'password'], function () {
 
         Route::post('/reset', 'Api\AuthController@resetPassword')->name('api.password.reset');
+        Route::post('/send', 'Api\AuthController@sendPassword')->name('api.password.send');
     });
 
     // private routes

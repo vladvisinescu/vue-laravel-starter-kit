@@ -32,6 +32,8 @@ return [
 
     'forgot_password_text' => 'Vă rugăm să ne informați despre adresa de e-mail pe care ați folosit-o pentru a vă înscrie pentru serviciul nostru și vă vom trimite un mesaj care conține instrucțiuni pentru a vă reseta parola.',
     'forgot_password_success' => 'Dacă aveți un cont cu noi, un e-mail ar trebui să ajungă în scurt timp la adresa furnizată.',
+    'forgot_password_email' => 'Verificați adresa dvs. de e-mail pentru a continua procesul de recuperare a parolei.',
+    'forgot_password_login' => 'Recuperarea parolei a avut succes! Acum vă puteți autentifica folosind noile date.',
 
     'logout' => [
         'toast' => [

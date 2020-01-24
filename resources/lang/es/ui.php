@@ -22,6 +22,8 @@ return [
             'name' => 'Nombre',
             'password_again' => 'Contraseña de nuevo'
         ],
+        'success' => 'Éxito',
+        'error' => 'Error',
 
         'unauthorized' => 'No autorizado'
     ]

@@ -60,6 +60,8 @@ return [
         'read'
     ],
 
+    'reset_token_lifetime' => '60', // In minutes
+
     /*
     |--------------------------------------------------------------------------
     | User Providers

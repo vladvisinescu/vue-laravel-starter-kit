@@ -22,6 +22,8 @@ return [
             'name' => 'Nume',
             'password_again' => 'Repetă Parola'
         ],
+        'success' => 'Succes',
+        'error' => 'Eroare',
 
         'unauthorized' => 'Lipsă autorizare'
     ]

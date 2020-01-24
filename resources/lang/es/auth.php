@@ -32,6 +32,8 @@ return [
 
     'forgot_password_text' => 'Háganos saber la dirección de correo electrónico que utilizó para suscribirse a nuestro servicio y le enviaremos un mensaje con instrucciones para restablecer su contraseña.',
     'forgot_password_success' => 'Si tiene una cuenta con nosotros, un correo electrónico debería llegar en breve al correo proporcionado.',
+    'forgot_password_email' => 'Verifique su dirección de correo electrónico para continuar el proceso de recuperación de contraseña.',
+    'forgot_password_login' => 'Recuperación de contraseña exitosa! Ahora puede iniciar sesión con las nuevas credenciales.',
 
     'logout' => [
         'toast' => [

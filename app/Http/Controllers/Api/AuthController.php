@@ -4,14 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Auth\User;
 
+use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ChangedPasswordNotification;
+
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Api\Auth\ApiLoginRequest;
 use App\Http\Requests\Api\Auth\ApiRegisterRequest;
+use App\Http\Requests\Api\Auth\SendPasswordRequest;
 use App\Http\Requests\Api\Auth\ResetPasswordRequest;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 
@@ -119,7 +127,41 @@ class AuthController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user->notify(new ResetPasswordNotification);
+        $token = encrypt($user->id . '-' . now()->format('YmdHis') . '-' . Str::random(32));
+
+        $user->update([
+            'reset_token' => $token,
+            'reset_token_created_at' => now()
+        ]);
+
+        $user->notify(new ResetPasswordNotification($token));
+
+        return response()->json([], 200);
+    }
+
+    public function sendPassword(SendPasswordRequest $request)
+    {
+        $user = User::where('email', $request->input('email'))->first();
+
+        // Check token expiry
+        if ($user->reset_token_created_at->diffInMinutes(now()) > config('auth.reset_token_lifetime')) {
+            abort(400, 'Token expired.');
+        }
+
+        // Check provided and stored tokens match
+        if ($user->reset_token !== $request->input('token')) {
+            abort(400, 'Token mismatch.');
+        }
+
+        $user->update([
+            'password' => bcrypt($request->input('password')),
+            'reset_token' => null,
+            'reset_token_created_at' => null
+        ]);
+
+        $user->notify(new ChangedPasswordNotification);
+
+        return response()->json([], 200);
     }
 
     protected function proxy(string $grantType = 'password', array $data = [])

@@ -100,6 +100,18 @@ const actions = {
         })
     },
 
+    trySendNewPassword({ commit, dispatch }, { form }) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.password.send'), form).then(response => {
+                // commit('', {})
+                resolve(response.data)
+            }).catch(error => {
+                commit('setForgotPasswordErrors', error.response.data.errors || {})
+                reject(error)
+            })
+        })
+    },
+
     tryLogout({ commit, state }, data) {
         return new Promise((resolve, reject) => {
             axios.post(route('api.logout')).then(response => {

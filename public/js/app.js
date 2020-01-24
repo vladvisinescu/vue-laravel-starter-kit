@@ -1875,6 +1875,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
@@ -1883,8 +1910,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
-        email: ''
-      }
+        email: '',
+        password: '',
+        password_confirmation: '',
+        token: this.$route.params.token
+      },
+      password_check: null
     };
   },
   beforeRouteLeave: function beforeRouteLeave(to, from, next) {
@@ -1892,15 +1923,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     next();
   },
   methods: {
-    tryPasswordRefresh: function tryPasswordRefresh() {
+    tryPasswordReset: function tryPasswordReset() {
+      var _this = this;
+
       var form = this.form;
       this.$store.dispatch('auth/tryResetPassword', {
         form: form
       }).then(function (response) {
-        console.log(response);
+        _this.$router.push({
+          name: 'home'
+        }).then(function () {
+          _this.$toast().info({
+            title: _this.__('ui.auth.success'),
+            body: _this.__('auth.forgot_password_email'),
+            duration: 10000
+          });
+        });
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    sendNewPassword: function sendNewPassword() {
+      var _this2 = this;
+
+      var form = this.form;
+      this.$store.dispatch('auth/trySendNewPassword', {
+        form: form
+      }).then(function (response) {
+        _this2.$router.push({
+          name: 'login'
+        }).then(function () {
+          _this2.$toast().success({
+            title: _this2.__('ui.auth.success'),
+            body: _this2.__('auth.forgot_password_login')
+          });
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    testPassword: function testPassword() {
+      this.password_check = zxcvbn(this.form.password);
+    }
+  },
+  mounted: function mounted() {
+    var recaptchaScript = document.createElement('script');
+    recaptchaScript.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js');
+    recaptchaScript.setAttribute('type', 'text/javascript');
+    recaptchaScript.setAttribute('id', 'password-meter'); // document.head.appendChild(recaptchaScript)
+
+    if (!document.head.querySelectorAll('#password-meter').length) {
+      document.head.appendChild(recaptchaScript);
     }
   }
 });
@@ -20159,73 +20232,279 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("p", [_vm._v(_vm._s(_vm.__("auth.forgot_password_text")))]),
-            _vm._v(" "),
-            _c("div", { staticClass: "app-login-form" }, [
-              _c(
-                "form",
-                {
-                  attrs: { action: "" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.tryPasswordRefresh($event)
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "email" } }, [
-                      _vm._v(_vm._s(_vm.__("ui.auth.form.username")))
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.email,
-                          expression: "form.email"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: { "is-invalid": _vm.errors.email },
-                      attrs: { type: "text", id: "email" },
-                      domProps: { value: _vm.form.email },
+          !_vm.$route.params.token
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("p", [_vm._v(_vm._s(_vm.__("auth.forgot_password_text")))]),
+                _vm._v(" "),
+                _c("div", { staticClass: "app-login-form" }, [
+                  _c(
+                    "form",
+                    {
+                      attrs: { action: "" },
                       on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "email", $event.target.value)
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.tryPasswordReset($event)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.email
-                      ? _c(
-                          "span",
-                          { staticClass: "help-block invalid-feedback" },
-                          [_vm._v(_vm._s(_vm.errors.email[0]))]
+                    },
+                    [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "email" } }, [
+                          _vm._v(_vm._s(_vm.__("ui.auth.form.username")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.email,
+                              expression: "form.email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.errors.email },
+                          attrs: { type: "text", id: "email" },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "email", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.email
+                          ? _c(
+                              "span",
+                              { staticClass: "help-block invalid-feedback" },
+                              [_vm._v(_vm._s(_vm.errors.email[0]))]
+                            )
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v(_vm._s(_vm.__("ui.auth.forgot_submit")))]
                         )
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-block",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v(_vm._s(_vm.__("ui.auth.forgot_submit")))]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            : _vm.$route.params.token
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("p", [
+                  _vm._v(
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A eius molestias nemo neque quaerat quia quidem soluta. Deserunt, impedit, laudantium."
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    attrs: { action: "" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.sendNewPassword($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v(_vm._s(_vm.__("ui.auth.form.username")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.email,
+                            expression: "form.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors.email },
+                        attrs: { type: "text", id: "email" },
+                        domProps: { value: _vm.form.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "email", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.email
+                        ? _c(
+                            "span",
+                            { staticClass: "help-block invalid-feedback" },
+                            [_vm._v(_vm._s(_vm.errors.email[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "password" } }, [
+                        _vm._v(_vm._s(_vm.__("ui.auth.form.password")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password,
+                            expression: "form.password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.errors.password ||
+                            (_vm.password_check
+                              ? _vm.password_check.score < 3
+                              : false),
+                          "is-valid": _vm.password_check
+                            ? _vm.password_check.score > 2
+                            : false
+                        },
+                        attrs: { type: "password", id: "password" },
+                        domProps: { value: _vm.form.password },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "password",
+                                $event.target.value
+                              )
+                            },
+                            _vm.testPassword
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c(
+                            "span",
+                            { staticClass: "help-block invalid-feedback" },
+                            [_vm._v(_vm._s(_vm.errors.password[0]))]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      (_vm.password_check
+                      ? _vm.password_check.score < 3
+                      : false)
+                        ? _c(
+                            "span",
+                            { staticClass: "help-block invalid-feedback" },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.__("auth.password_complexity.weak"))
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "help-block valid-feedback" })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "password_confirmation" } }, [
+                        _vm._v(_vm._s(_vm.__("ui.auth.form.password_again")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password_confirmation,
+                            expression: "form.password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "password",
+                          id: "password_confirmation"
+                        },
+                        domProps: { value: _vm.form.password_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "btn-group d-flex justify-content-between"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.token,
+                                expression: "form.token"
+                              }
+                            ],
+                            attrs: { type: "hidden", name: "reset_token" },
+                            domProps: { value: _vm.form.token },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "token", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-block",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v("Update Password")]
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
         ])
       ])
     ])
@@ -38537,7 +38816,7 @@ var routes = [{
   name: 'register',
   component: _components_Auth_Register__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
-  path: '/forgot_password',
+  path: '/forgot_password/:token?',
   name: 'forgot_password',
   component: _components_Auth_ForgotPassword__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
@@ -38744,9 +39023,23 @@ var actions = {
       });
     });
   },
-  tryLogout: function tryLogout(_ref8, data) {
+  trySendNewPassword: function trySendNewPassword(_ref8, _ref9) {
     var commit = _ref8.commit,
-        state = _ref8.state;
+        dispatch = _ref8.dispatch;
+    var form = _ref9.form;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.password.send'), form).then(function (response) {
+        // commit('', {})
+        resolve(response.data);
+      })["catch"](function (error) {
+        commit('setForgotPasswordErrors', error.response.data.errors || {});
+        reject(error);
+      });
+    });
+  },
+  tryLogout: function tryLogout(_ref10, data) {
+    var commit = _ref10.commit,
+        state = _ref10.state;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.logout')).then(function (response) {
         commit('clearAuth');
@@ -38756,12 +39049,12 @@ var actions = {
       });
     });
   },
-  getUser: function getUser(_ref9, _ref10) {
+  getUser: function getUser(_ref11, _ref12) {
     var _this = this;
 
-    var commit = _ref9.commit,
-        state = _ref9.state;
-    var data = _ref10.data;
+    var commit = _ref11.commit,
+        state = _ref11.state;
+    var data = _ref12.data;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.user'), data).then(function (response) {
         commit('setUser', response.data);

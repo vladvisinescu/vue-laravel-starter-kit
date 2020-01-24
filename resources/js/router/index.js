@@ -36,7 +36,7 @@ const routes = [
         component: Register
     },
     {
-        path: '/forgot_password',
+        path: '/forgot_password/:token?',
         name: 'forgot_password',
         component: ForgotPassword
     },

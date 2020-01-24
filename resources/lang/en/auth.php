@@ -32,6 +32,8 @@ return [
 
     'forgot_password_text' => 'Let us know of the email address you used to signup for our service and we will send you a message containing instructions to reset your password.',
     'forgot_password_success' => 'If you have an account with us, an email should arrive shortly at the email provided.',
+    'forgot_password_email' => 'Check your email address to continue the password recovery process.',
+    'forgot_password_login' => 'Password recovery successful! You may now login using the new credentials.',
 
     'logout' => [
         'toast' => [
