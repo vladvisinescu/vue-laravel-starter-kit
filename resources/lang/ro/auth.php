@@ -30,6 +30,9 @@ return [
 
     'unauthorized' => 'Nu sunteți autorizat să vizualizați această resursă.',
 
+    'forgot_password_text' => 'Vă rugăm să ne informați despre adresa de e-mail pe care ați folosit-o pentru a vă înscrie pentru serviciul nostru și vă vom trimite un mesaj care conține instrucțiuni pentru a vă reseta parola.',
+    'forgot_password_success' => 'Dacă aveți un cont cu noi, un e-mail ar trebui să ajungă în scurt timp la adresa furnizată.',
+
     'logout' => [
         'toast' => [
             'success' => 'Te-ai deconectat cu succes!',

@@ -12,6 +12,8 @@ return [
         'register' => 'Register',
         'register_question' => 'Need an account?',
         'forgot_question' => 'Forgot password?',
+        'forgot_title' => 'Recover password',
+        'forgot_submit' => 'Recover',
         'welcome' => 'Welcome, :name',
         'guest' => 'Guest',
         'form' => [

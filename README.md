@@ -10,6 +10,7 @@
 8. `npm run watch`
 9. `php artisan snick:admin` to create a new admin
 10. `php artisan trans:js` to recompile translations to JS
+11. `sudo pecl install redis` for making queues work
 
 #### Left to do _so far_
 

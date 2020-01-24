@@ -5,7 +5,8 @@ const state = {
     errors: {
         user: {},
         login: {},
-        register: {}
+        register: {},
+        forgot_password: {}
     },
     user: {
         id: null,
@@ -16,6 +17,10 @@ const state = {
 }
 
 const getters = {
+
+    getForgotPasswordErrors(state) {
+        return state.errors.forgot_password
+    },
 
     getLoginErrors(state) {
         return state.errors.login
@@ -78,6 +83,18 @@ const actions = {
                 resolve(response.data)
             }).catch(error => {
                 // TODO: Your session has expired blah blah blah
+                reject(error)
+            })
+        })
+    },
+
+    tryResetPassword({ commit, dispatch }, { form }) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.password.reset'), form).then(response => {
+                // commit('', {})
+                resolve(response.data)
+            }).catch(error => {
+                commit('setForgotPasswordErrors', error.response.data.errors || {})
                 reject(error)
             })
         })
@@ -181,6 +198,14 @@ const mutations = {
 
     setIsAuthenticated(state, data) {
         state.isAuthenticated = data
+    },
+
+    setForgotPasswordErrors(state, data) {
+        state.errors.forgot_password = data
+    },
+
+    clearForgotPasswordErrors(state, errors) {
+        state.errors.forgot_password = {}
     },
 }
 

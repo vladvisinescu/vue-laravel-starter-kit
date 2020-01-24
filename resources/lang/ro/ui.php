@@ -12,6 +12,8 @@ return [
         'register' => 'Creare cont',
         'register_question' => 'Ai nevoie de un cont?',
         'forgot_question' => 'Ai uitat parola?',
+        'forgot_title' => 'Recuperare parolă',
+        'forgot_submit' => 'Trimite',
         'welcome' => 'Salut, :name',
         'guest' => 'Utilizator anonim',
         'form' => [

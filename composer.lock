@@ -3973,6 +3973,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-11-13T19:16:13+00:00"
         }
     ],
@@ -4260,6 +4261,7 @@
                 "selenium",
                 "webdriver"
             ],
+            "abandoned": "php-webdriver/webdriver",
             "time": "2019-06-13T08:02:18+00:00"
         },
         {

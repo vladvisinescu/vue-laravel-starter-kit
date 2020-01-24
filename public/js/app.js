@@ -1838,6 +1838,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1868,17 +1875,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    errors: 'auth/getForgotPasswordErrors'
+  })),
   data: function data() {
-    return {//
+    return {
+      form: {
+        email: ''
+      }
     };
+  },
+  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
+    this.$store.commit('auth/clearForgotPasswordErrors');
+    next();
+  },
+  methods: {
+    tryPasswordRefresh: function tryPasswordRefresh() {
+      var form = this.form;
+      this.$store.dispatch('auth/tryResetPassword', {
+        form: form
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -20131,12 +20154,14 @@ var render = function() {
           _c("h4", { staticClass: "card-header" }, [
             _vm._v(
               "\n                    " +
-                _vm._s(_vm.__("ui.auth.forgot_password")) +
+                _vm._s(_vm.__("ui.auth.forgot_title")) +
                 "\n                "
             )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
+            _c("p", [_vm._v(_vm._s(_vm.__("auth.forgot_password_text")))]),
+            _vm._v(" "),
             _c("div", { staticClass: "app-login-form" }, [
               _c(
                 "form",
@@ -20145,6 +20170,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
+                      return _vm.tryPasswordRefresh($event)
                     }
                   }
                 },
@@ -20178,59 +20204,11 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _vm.errors.email
-                      ? _c("span", { staticClass: "help-block" }, [
-                          _vm._v(_vm._s(_vm.errors.email[0]))
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "d-flex justify-content-between",
-                        attrs: { for: "password" }
-                      },
-                      [
-                        _c("span", [
-                          _vm._v(_vm._s(_vm.__("ui.auth.form.password")))
-                        ]),
-                        _vm._v(" "),
-                        _c("strong", [
-                          _c("a", { attrs: { href: "javascript:;" } }, [
-                            _vm._v(_vm._s(_vm.__("ui.auth.forgot_question")))
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.password,
-                          expression: "form.password"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: { "is-invalid": _vm.errors.password },
-                      attrs: { type: "password", id: "password" },
-                      domProps: { value: _vm.form.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "password", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.password
-                      ? _c("span", { staticClass: "help-block" }, [
-                          _vm._v(_vm._s(_vm.errors.password[0]))
-                        ])
+                      ? _c(
+                          "span",
+                          { staticClass: "help-block invalid-feedback" },
+                          [_vm._v(_vm._s(_vm.errors.email[0]))]
+                        )
                       : _vm._e()
                   ]),
                   _vm._v(" "),
@@ -20241,26 +20219,9 @@ var render = function() {
                         staticClass: "btn btn-info btn-block",
                         attrs: { type: "submit" }
                       },
-                      [_vm._v(_vm._s(_vm.__("ui.auth.login")))]
+                      [_vm._v(_vm._s(_vm.__("ui.auth.forgot_submit")))]
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-outline-secondary",
-                          staticStyle: { "white-space": "pre" },
-                          attrs: { to: "/register" }
-                        },
-                        [_vm._v(_vm._s(_vm.__("ui.auth.register_question")))]
-                      )
-                    ],
-                    1
-                  )
+                  ])
                 ]
               )
             ])
@@ -21546,8 +21507,8 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.1.3
-  * (c) 2019 Evan You
+  * vue-router v3.1.5
+  * (c) 2020 Evan You
   * @license MIT
   */
 /*  */
@@ -21613,14 +21574,12 @@ var View = {
     var depth = 0;
     var inactive = false;
     while (parent && parent._routerRoot !== parent) {
-      var vnodeData = parent.$vnode && parent.$vnode.data;
-      if (vnodeData) {
-        if (vnodeData.routerView) {
-          depth++;
-        }
-        if (vnodeData.keepAlive && parent._inactive) {
-          inactive = true;
-        }
+      var vnodeData = parent.$vnode ? parent.$vnode.data : {};
+      if (vnodeData.routerView) {
+        depth++;
+      }
+      if (vnodeData.keepAlive && parent._directInactive && parent._inactive) {
+        inactive = true;
       }
       parent = parent.$parent;
     }
@@ -21628,17 +21587,32 @@ var View = {
 
     // render previous view if the tree is inactive and kept-alive
     if (inactive) {
-      return h(cache[name], data, children)
+      var cachedData = cache[name];
+      var cachedComponent = cachedData && cachedData.component;
+      if (cachedComponent) {
+        // #2301
+        // pass props
+        if (cachedData.configProps) {
+          fillPropsinData(cachedComponent, data, cachedData.route, cachedData.configProps);
+        }
+        return h(cachedComponent, data, children)
+      } else {
+        // render previous empty view
+        return h()
+      }
     }
 
     var matched = route.matched[depth];
-    // render empty node if no matched route
-    if (!matched) {
+    var component = matched && matched.components[name];
+
+    // render empty node if no matched route or no config component
+    if (!matched || !component) {
       cache[name] = null;
       return h()
     }
 
-    var component = cache[name] = matched.components[name];
+    // cache component
+    cache[name] = { component: component };
 
     // attach instance registration hook
     // this will be called in the instance's injected lifecycle hooks
@@ -21670,24 +21644,36 @@ var View = {
       }
     };
 
-    // resolve props
-    var propsToPass = data.props = resolveProps(route, matched.props && matched.props[name]);
-    if (propsToPass) {
-      // clone to prevent mutation
-      propsToPass = data.props = extend({}, propsToPass);
-      // pass non-declared props as attrs
-      var attrs = data.attrs = data.attrs || {};
-      for (var key in propsToPass) {
-        if (!component.props || !(key in component.props)) {
-          attrs[key] = propsToPass[key];
-          delete propsToPass[key];
-        }
-      }
+    var configProps = matched.props && matched.props[name];
+    // save route and configProps in cachce
+    if (configProps) {
+      extend(cache[name], {
+        route: route,
+        configProps: configProps
+      });
+      fillPropsinData(component, data, route, configProps);
     }
 
     return h(component, data, children)
   }
 };
+
+function fillPropsinData (component, data, route, configProps) {
+  // resolve props
+  var propsToPass = data.props = resolveProps(route, configProps);
+  if (propsToPass) {
+    // clone to prevent mutation
+    propsToPass = data.props = extend({}, propsToPass);
+    // pass non-declared props as attrs
+    var attrs = data.attrs = data.attrs || {};
+    for (var key in propsToPass) {
+      if (!component.props || !(key in component.props)) {
+        attrs[key] = propsToPass[key];
+        delete propsToPass[key];
+      }
+    }
+  }
+}
 
 function resolveProps (route, config) {
   switch (typeof config) {
@@ -22469,7 +22455,8 @@ function fillParams (
     return filler(params, { pretty: true })
   } catch (e) {
     if (true) {
-      warn(false, ("missing param for " + routeMsg + ": " + (e.message)));
+      // Fix #3072 no warn if `pathMatch` is string
+      warn(typeof params.pathMatch === 'string', ("missing param for " + routeMsg + ": " + (e.message)));
     }
     return ''
   } finally {
@@ -22491,20 +22478,25 @@ function normalizeLocation (
   if (next._normalized) {
     return next
   } else if (next.name) {
-    return extend({}, raw)
+    next = extend({}, raw);
+    var params = next.params;
+    if (params && typeof params === 'object') {
+      next.params = extend({}, params);
+    }
+    return next
   }
 
   // relative params
   if (!next.path && next.params && current) {
     next = extend({}, next);
     next._normalized = true;
-    var params = extend(extend({}, current.params), next.params);
+    var params$1 = extend(extend({}, current.params), next.params);
     if (current.name) {
       next.name = current.name;
-      next.params = params;
+      next.params = params$1;
     } else if (current.matched.length) {
       var rawPath = current.matched[current.matched.length - 1].path;
-      next.path = fillParams(rawPath, params, ("path " + (current.path)));
+      next.path = fillParams(rawPath, params$1, ("path " + (current.path)));
     } else if (true) {
       warn(false, "relative params navigation requires a current route.");
     }
@@ -22644,7 +22636,7 @@ var Link = {
         if (true) {
           warn(
             false,
-            ("RouterLink with to=\"" + (this.props.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child.")
+            ("RouterLink with to=\"" + (this.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.")
           );
         }
         return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
@@ -23369,7 +23361,10 @@ function pushState (url, replace) {
   var history = window.history;
   try {
     if (replace) {
-      history.replaceState({ key: getStateKey() }, '', url);
+      // preserve existing history state as it could be overriden by the user
+      var stateCopy = extend({}, history.state);
+      stateCopy.key = getStateKey();
+      history.replaceState(stateCopy, '', url);
     } else {
       history.pushState({ key: setStateKey(genStateKey()) }, '', url);
     }
@@ -24084,9 +24079,7 @@ function getHash () {
       href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex);
     } else { href = decodeURI(href); }
   } else {
-    if (searchIndex > -1) {
-      href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
-    }
+    href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
   }
 
   return href
@@ -24420,7 +24413,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.1.3';
+VueRouter.version = '3.1.5';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -38659,7 +38652,8 @@ var state = {
   errors: {
     user: {},
     login: {},
-    register: {}
+    register: {},
+    forgot_password: {}
   },
   user: {
     id: null,
@@ -38669,6 +38663,9 @@ var state = {
   isAuthenticated: false
 };
 var getters = {
+  getForgotPasswordErrors: function getForgotPasswordErrors(state) {
+    return state.errors.forgot_password;
+  },
   getLoginErrors: function getLoginErrors(state) {
     return state.errors.login;
   },
@@ -38733,9 +38730,23 @@ var actions = {
       });
     });
   },
-  tryLogout: function tryLogout(_ref6, data) {
+  tryResetPassword: function tryResetPassword(_ref6, _ref7) {
     var commit = _ref6.commit,
-        state = _ref6.state;
+        dispatch = _ref6.dispatch;
+    var form = _ref7.form;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.password.reset'), form).then(function (response) {
+        // commit('', {})
+        resolve(response.data);
+      })["catch"](function (error) {
+        commit('setForgotPasswordErrors', error.response.data.errors || {});
+        reject(error);
+      });
+    });
+  },
+  tryLogout: function tryLogout(_ref8, data) {
+    var commit = _ref8.commit,
+        state = _ref8.state;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.logout')).then(function (response) {
         commit('clearAuth');
@@ -38745,12 +38756,12 @@ var actions = {
       });
     });
   },
-  getUser: function getUser(_ref7, _ref8) {
+  getUser: function getUser(_ref9, _ref10) {
     var _this = this;
 
-    var commit = _ref7.commit,
-        state = _ref7.state;
-    var data = _ref8.data;
+    var commit = _ref9.commit,
+        state = _ref9.state;
+    var data = _ref10.data;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.user'), data).then(function (response) {
         commit('setUser', response.data);
@@ -38825,6 +38836,12 @@ var mutations = {
   },
   setIsAuthenticated: function setIsAuthenticated(state, data) {
     state.isAuthenticated = data;
+  },
+  setForgotPasswordErrors: function setForgotPasswordErrors(state, data) {
+    state.errors.forgot_password = data;
+  },
+  clearForgotPasswordErrors: function clearForgotPasswordErrors(state, errors) {
+    state.errors.forgot_password = {};
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

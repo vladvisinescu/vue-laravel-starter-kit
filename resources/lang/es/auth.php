@@ -30,6 +30,9 @@ return [
 
     'unauthorized' => 'No tiene autorización para ver este recurso.',
 
+    'forgot_password_text' => 'Háganos saber la dirección de correo electrónico que utilizó para suscribirse a nuestro servicio y le enviaremos un mensaje con instrucciones para restablecer su contraseña.',
+    'forgot_password_success' => 'Si tiene una cuenta con nosotros, un correo electrónico debería llegar en breve al correo proporcionado.',
+
     'logout' => [
         'toast' => [
             'success' => '¡Saliste exitosamente!',

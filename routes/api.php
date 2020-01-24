@@ -23,6 +23,10 @@ Route::group([], function () {
     Route::post('/register', 'Api\AuthController@register')->name('api.register');
     Route::post('/refresh', 'Api\AuthController@refreshToken')->name('api.refresh');
     Route::post('/logout', 'Api\AuthController@logout')->name('api.logout');
+    Route::group(['/prefix' => 'password'], function () {
+
+        Route::post('/reset', 'Api\AuthController@resetPassword')->name('api.password.reset');
+    });
 
     // private routes
     Route::middleware('auth:api')->group(function () {

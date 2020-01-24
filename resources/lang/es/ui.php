@@ -12,6 +12,8 @@ return [
         'register' => 'Registrarse',
         'register_question' => '¿Necesito una cuenta?',
         'forgot_question' => '¿Se te olvidó tu contraseña?',
+        'forgot_title' => 'Recuperar contraseña',
+        'forgot_submit' => 'Recuperar',
         'welcome' => 'Bienvenido, :name',
         'guest' => 'Usuario invitado',
         'form' => [

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Auth\User;
+
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\ApiLoginRequest;
 use App\Http\Requests\Api\Auth\ApiRegisterRequest;
+use App\Http\Requests\Api\Auth\ResetPasswordRequest;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -105,6 +107,19 @@ class AuthController extends Controller
             'access_token' => $token,
             'expires_in' => $body->expires_in,
         ], Response::HTTP_OK)->cookie($cookie);
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $user = User::where('email', $request->input('email'))->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $user->notify(new ResetPasswordNotification);
     }
 
     protected function proxy(string $grantType = 'password', array $data = [])
