@@ -10,7 +10,7 @@
 8. `npm run watch`
 9. `php artisan snick:admin` to create a new admin
 10. `php artisan trans:js` to recompile translations to JS
-11. `sudo pecl install redis` for making queues work
+11. `sudo apt install beanstalkd`
 
 #### Left to do _so far_
 
@@ -19,3 +19,10 @@
 - email verification
 - component lazy loading chunks
 - ~~password complexity indicator~~ done using Dropbox's `https://github.com/dropbox/zxcvbn` library
+- git ignore assets js/css
+- clean mailgun config
+- github develop branches
+- Gate.js clone
+- https://github.com/laravolt/avatar
+- https://github.com/oussamahamdaoui/forgJs
+
