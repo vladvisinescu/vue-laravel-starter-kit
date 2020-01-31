@@ -12,3 +12,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /resources/js/test/__snapshots__
+/public/js/translations
+/public/js/app.js
+/public/css/app.css
