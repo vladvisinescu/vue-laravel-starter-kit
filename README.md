@@ -1,3 +1,5 @@
+> A tutorial about how everything was built is coming soon on [visinescu.com](https://visinescu.com)
+
 #### Installation
 1. clone the repo
 2. `composer install`
@@ -7,21 +9,30 @@
 6. `php artisan passport:install`
     - fill in `PERSONAL_CLIENT_ID`, `PERSONAL_CLIENT_SECRET`, `PASSWORD_CLIENT_ID`, `PASSWORD_CLIENT_SECRET` in `.env` with info from this command 
 7. update `APP_URL` in `.env` to reflect you local dev environment (eg: http://local.smartsearch.com)
-8. `npm run watch`
+8. `npm run dev` / `npm run watch` for developing the frontend
 9. `php artisan snick:admin` to create a new admin
 10. `php artisan trans:js` to recompile translations to JS
 11. `sudo apt install beanstalkd`
+12. `sudo apt install supervisor`
+     ```
+        [program:laravel-worker]
+        process_name=%(program_name)s_%(process_num)02d
+        command=php /var/www/boilerplate/artisan queue:work --tries=3
+        autostart=true
+        autorestart=true
+        user=visinescu
+        numprocs=2
+        redirect_stderr=true
+        stdout_logfile=/var/www/boilerplate/worker.log
+     ```
+13. to be continued
 
-#### Left to do _so far_
+##### TODO
 
 - API client wrapper?
 - reset password messages / toasts
 - email verification
 - component lazy loading chunks
-- ~~password complexity indicator~~ done using Dropbox's `https://github.com/dropbox/zxcvbn` library
-- git ignore assets js/css
-- clean mailgun config
-- github develop branches
 - Gate.js clone
 - https://github.com/laravolt/avatar
 - https://github.com/oussamahamdaoui/forgJs

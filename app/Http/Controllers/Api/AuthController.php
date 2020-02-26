@@ -168,8 +168,8 @@ class AuthController extends Controller
     {
         $data = array_merge($data, [
             'grant_type' => $grantType,
-            'client_id' => env('PASSWORD_CLIENT_ID'),
-            'client_secret' => env('PASSWORD_CLIENT_SECRET'),
+            'client_id' => config('app.client.id'),
+            'client_secret' => config('app.client.secret'),
         ]);
 
         $client = new Client([
