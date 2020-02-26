@@ -1,3 +1,5 @@
+> A tutorial about how everything was built is coming soon on [visinescu.com](https://visinescu.com)
+
 #### Installation
 1. clone the repo
 2. `composer install`
